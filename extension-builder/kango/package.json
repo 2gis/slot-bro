@@ -1,0 +1,13 @@
+{
+  "name": "Kango Builder",
+  "description": "Gulp Kango Builder",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.0"
+  },
+  "optionalDependencies": {},
+  "config": {}
+}
