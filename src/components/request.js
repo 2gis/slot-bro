@@ -1,4 +1,4 @@
-import { Component } from "baseComponent";
+import { Component } from "base/component";
 
 class Xhr {
     constructor() {

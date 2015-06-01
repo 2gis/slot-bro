@@ -1,12 +1,16 @@
 "use strict";
 import * as _ from "lodash";
 
-const STAGE_INITING = 1;
-const STAGE_INITED = 2;
-const STAGE_KILLED = 4;
-const STAGE_DISPOSED = 8;
-const STAGE_ALIVE = 3; // = STAGE_INITING | STAGE_INITED
-const STAGE_NOT_ALIVE = 12; // = STAGE_DISPOSED | STAGE_KILLED
+function _bindEach(handlersList, target) {
+    _.each(handlersList, function(val, key) {
+        if (!_.isFunction(val)) {
+            throw new TypeError('In module ' + target._moduleName + ' handler ' + key + ' is not a function');
+        }
+        handlersList[key] = _.bind(val, target);
+    });
+    return handlersList;
+}
+
 
 export class Module {
     constructor(application, moduleId, moduleName) {
@@ -16,12 +20,21 @@ export class Module {
         this._app = application;
         this._moduleId = moduleId;
         this._moduleName = moduleName;
-        this._stage = STAGE_INITING;
         this._modules = {};
+        this.interface = _bindEach(this._downcastHandlers(), this);
+        this.dispatcher = _bindEach(this._upcastHandlers(), this);
     }
 
     init(initData, callback) {
         callback();
+    }
+
+    _upcastHandlers() {
+        return {};
+    }
+
+    _downcastHandlers() {
+        return {};
     }
 
     dispose() {}
@@ -46,17 +59,12 @@ export class Module {
      * @returns {*}
      */
     makeChild(childModuleName, initData = {}, onReady = _.noop) {
-        // Если слот умер - ничего инитить нет смысла, потому что слот умирает вместе с родительским модулем
-        if (this._stage & STAGE_NOT_ALIVE) {
-            return null;
-        }
-
         var instance = this._loadModule({type: childModuleName, data: initData});
 
         instance.init(initData, function(err) {
             if (err) {
                 instance.dispose();
-            } else if (instance._stage & STAGE_INITED) { // На случай, если суицид модуля
+            } else {
                 this._modules[this._moduleName] = this._modules[this._moduleName] || [];
                 this._modules[this._moduleName].push(instance);
             }
@@ -75,6 +83,7 @@ export class Module {
      * @private
      */
     _loadModule(data) {
+        data.parentId = this._moduleId;
         return this._app.loadModule(data);
     }
 

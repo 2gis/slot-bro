@@ -39,9 +39,8 @@ module.exports = function(baseConf) {
 
         resolve: {
             alias: {
-                baseModule: __dirname + '/../../src/module.js',
-                baseComponent: __dirname + '/../../src/component.js',
-                app: __dirname + '/../../src/application.js'
+                base: __dirname + '/../../src/base',
+                app: __dirname + '/../../src/base/application'
             }
         },
 

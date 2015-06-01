@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Component } from "baseComponent";
+import { Component } from "base/component";
 
 const userIdStorageKey = '_user_unique_id';
 

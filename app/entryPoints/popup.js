@@ -1,4 +1,4 @@
 import * as _ from "lodash";
-import { Application } from "app";
+import { PopupApplication } from "base/application/popup";
 
-var app = new Application(); // TODO: PopupApp
+var app = new PopupApplication();

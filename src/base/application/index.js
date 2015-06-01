@@ -1,17 +1,18 @@
 import * as _ from "lodash";
 import $ from "jquery";
-import MessageRouter from "./lib/messageRouter";
-import { modificatorClass, elementClass } from "./lib/classNamer";
+import MessageRouter from "./../../lib/messageRouter";
+import { modificatorClass, elementClass } from "./../../lib/classNamer";
 import { EventEmitter } from "events";
-import { initJqueryMod } from "./lib/jquery.mod";
+import { initJqueryMod } from "./../../lib/jquery.mod.js";
 initJqueryMod($);
 
-var contextRequireFramework = require.context("./", true, /^.*?(?!\.unit).{5}\.js$/);
-var contextRequireApp = require.context("../app/src/", true, /^.*?(?!\.unit).{5}\.js$/);
+var contextRequireFramework = require.context("../../", true, /^.*?(?!\.unit).{5}\.js$/);
+var contextRequireApp = require.context("../../../app/src/", true, /^.*?(?!\.unit).{5}\.js$/);
 
 export class Application extends EventEmitter {
     constructor() {
         super();
+        this._rootModuleInitialized = false;
         this._ids = {};
         this._moduleDescriptors = {};
         this._components = {};
@@ -46,8 +47,12 @@ export class Application extends EventEmitter {
         return lib;
     }
 
+    _moduleIdPrefix() {
+        return '';
+    }
+
     _nextModuleId(parentId) {
-        var key = parentId || 'root';
+        var key = this._moduleIdPrefix() + (parentId || 'root');
         if (!(key in this._ids)) {
             this._ids[key] = 1;
         }
@@ -102,12 +107,28 @@ export class Application extends EventEmitter {
         return resource[_.capitalize(moduleName)];
     }
 
+    loadRootModule(moduleName) {
+        if (this._rootModuleInitialized) {
+            return null;
+        }
+
+        this._rootModuleInitialized = true;
+        return this.loadModule({
+            parentId: 0,
+            type: moduleName
+        });
+    }
+
     /**
      *
      * @param data
      * @returns {Module}
      */
     loadModule(data) {
+        if (!this._rootModuleInitialized) {
+            throw new ReferenceError('Must initialize root module before other modules invokation, see .loadRootModule');
+        }
+
         var app = this;
 
         var parentId = data.parentId,
@@ -161,6 +182,7 @@ export class Application extends EventEmitter {
             retValue;
 
         var event = {
+            'messageName': messageName,
             'sender': notifier,
             'stop': function () {
                 needStop = true;
@@ -175,7 +197,7 @@ export class Application extends EventEmitter {
                 dispatcher = instance.dispatcher;
 
             if (dispatcher) {
-                var actions = _.flatten(_.compact([dispatcher['*:' + messageName], dispatcher[notifier.type + ':' + messageName]]));
+                var actions = _.flatten(_.compact([dispatcher['*:*'], dispatcher['*:' + messageName], dispatcher[notifier.type + ':' + messageName]]));
 
                 _.each(actions, function (action) { // Выполняем действия диспетчера
                     var result = action.apply(event, params);

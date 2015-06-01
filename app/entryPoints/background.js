@@ -1,11 +1,6 @@
 import * as _ from "lodash";
-import { Application } from "app";
+import { BackgroundApplication } from "base/application/background";
 
-var app = new Application();
-
-var rootModule = app.loadModule({
-    parentId: 0,
-    type: 'helloWorld'
-});
-
+var app = new BackgroundApplication();
+var rootModule = app.loadRootModule('helloWorld');
 rootModule.init();
