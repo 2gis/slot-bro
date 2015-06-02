@@ -29,6 +29,22 @@ module.exports = function(baseConf) {
         "kango/initialize.js"
     ];
 
+    baseConf.mockIncludes = [ // only with dev/test server include. root path
+        '/mock/chrome.browserAction.js',
+        '/mock/chrome.cookies.js',
+        '/mock/chrome.extension.js',
+        '/mock/chrome.runtime.js',
+        '/mock/chrome.tabs.js',
+        '/mock/chrome.webNavigation.js',
+        '/mock/chrome.windows.js',
+
+        'mock/mock.ui.js' // only for background.html
+    ];
+
+    baseConf.mockStyleIncludes = [
+        'mock/mock.ui.css' // only for background.html
+    ];
+
     // webpack related
     baseConf.webpack = {
         entryPoints: baseConf.entryPoints,
