@@ -4,9 +4,13 @@ import * as _ from "lodash";
 /**
  * Content script root module
  */
-export class sbContentRoot extends ProxyRoot {
-    constructor() {
-        super();
-        kango.dispatchMessage('sb_SlaveContentAppCreated', true);
+export class SbContentRoot extends ProxyRoot {
+    constructor(...args) {
+        super(...args);
+        kango.dispatchMessage('sb_SlaveContentAppCreated', 'true');
+    }
+
+    __type() {
+        return 'content';
     }
 }

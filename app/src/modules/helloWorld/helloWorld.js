@@ -8,4 +8,17 @@ export class HelloWorld extends Module {
         /*eslint-enable no-undef, no-console */
         this.makeChild('helloWorldChild');
     }
+
+    _waitForMessage(e, msg) {
+        /*eslint-disable no-undef, no-console */
+        console.log('Hello from content: ' + msg);
+        /*eslint-enable no-undef, no-console */
+        this.broadcast('helloWorldContent:ping', 'Hello from background!');
+    }
+
+    _upcastHandlers() {
+        return {
+            '*:contentHello': this._waitForMessage
+        };
+    }
 }

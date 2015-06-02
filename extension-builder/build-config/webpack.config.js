@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var _ = require('lodash');
 
 module.exports = function(baseConf) {
     return {
@@ -44,11 +45,11 @@ module.exports = function(baseConf) {
             }
         },
 
-        plugins: [
+        plugins: _.compact([
             new webpack.optimize.CommonsChunkPlugin('commons.chunk.js', ['background', 'content', 'popup']),
             new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.chunk.js'),
             new webpack.optimize.DedupePlugin(),
-            new webpack.optimize.UglifyJsPlugin()
-        ]
+            (baseConf.debugMode ? null : new webpack.optimize.UglifyJsPlugin())
+        ])
     };
 };

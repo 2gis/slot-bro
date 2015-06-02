@@ -7,15 +7,10 @@ export class ContentApplication extends Application {
     }
 
     loadRootModule(moduleName, onReady) {
-        if (this._rootModuleInitialized) {
+        var module = super.loadRootModule('sbContentRoot');
+        if (!module) {
             return null;
         }
-        this._rootModuleInitialized = true;
-
-        var module = this.loadModule({
-            parentId: 0,
-            type: 'sbContentRoot'
-        });
 
         return module.init({
             module: moduleName

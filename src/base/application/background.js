@@ -2,21 +2,23 @@ import { Application } from "./index"
 import * as _ from "lodash";
 
 export class BackgroundApplication extends Application {
-    constructor() {
-        super();
-        this._bindHandlers();
+    constructor(...args) {
+        super(...args);
+
+        kango.addMessageListener('sb_FrameworkMessageUp', (event) => {
+            return this.notify(
+                this.getProxiedModuleId(event.target.getId(), event.data.moduleId),
+                event.data.messageName,
+                event.data.params || []
+            );
+        });
     }
 
     loadRootModule(moduleName) {
-        if (this._rootModuleInitialized) {
+        var rootModule = super.loadRootModule(moduleName);
+        if (!rootModule) {
             return null;
         }
-
-        this._rootModuleInitialized = true;
-        var rootModule = this.loadModule({
-            parentId: 0,
-            type: moduleName
-        });
 
         rootModule.makeChild('sbContentProxy');
         rootModule.makeChild('sbPopupProxy');
@@ -29,21 +31,29 @@ export class BackgroundApplication extends Application {
     }
 
     getProxiedModuleId(windowId, moduleId) {
-        return '_proxied:' + windowId + '_' + moduleId;
+        if (moduleId.indexOf('_proxied') === 0) {
+            return moduleId;
+        }
+        return `_proxied:${windowId}_${moduleId}`;
     }
 
     addModuleProxied(windowId, proxyModuleId, minimalDescriptor) {
-        minimalDescriptor.isProxied = true;
-        minimalDescriptor.proxyLink = this._moduleDescriptors[proxyModuleId].instance;
-        var moduleId = this.getProxiedModuleId(windowId, minimalDescriptor.id);
-        this._moduleDescriptors[moduleId] = minimalDescriptor;
-        this._moduleDescriptors[minimalDescriptor.parentId || proxyModuleId].children.push(moduleId);
+        _.extend(minimalDescriptor, {
+            isProxied: true,
+            proxyLink: this._moduleDescriptors[proxyModuleId].moduleInstance,
+
+            // rewrite id and parent id to match proxied naming
+            id: this.getProxiedModuleId(windowId, minimalDescriptor.id),
+            parentId: minimalDescriptor.parentId ? this.getProxiedModuleId(windowId, minimalDescriptor.parentId) : proxyModuleId
+        });
+
+        this._moduleDescriptors[minimalDescriptor.id] = minimalDescriptor;
+        this._moduleDescriptors[minimalDescriptor.parentId].children.push(minimalDescriptor.id);
         this.emit('moduleLoaded', minimalDescriptor);
     }
 
-    broadcast(moduleId, message) {
-        var args = [].slice.call(arguments, 2),
-            lastIndexOfDelim = message.lastIndexOf(':'),
+    broadcast(moduleId, message, ...args) {
+        var lastIndexOfDelim = message.lastIndexOf(':'),
             selector = message.substr(0, lastIndexOfDelim),
             action = message.substr(lastIndexOfDelim + 1);
 
@@ -53,9 +63,8 @@ export class BackgroundApplication extends Application {
                 descriptor.proxyLink.downcast(moduleId, message, args);
             } else {
                 var moduleInstance = descriptor.instance;
-                if (moduleInstance.interface) {
-                    var handler = moduleInstance.interface[action] || _.noop;
-                    handler.apply(moduleInstance.interface, args);
+                if (moduleInstance.interface && moduleInstance.interface[action]) {
+                    moduleInstance.interface[action](...args);
                 }
             }
         });

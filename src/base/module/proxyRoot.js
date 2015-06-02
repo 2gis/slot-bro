@@ -2,18 +2,22 @@ import { Module } from './index.js';
 import * as _ from "lodash";
 
 export class ProxyRoot extends Module {
-    constructor() {
-        super();
+    constructor(...args) {
+        super(...args);
 
-        this._app.on('moduleLoaded', function(descriptor) {
-            kango.dispatchMessage('sb_moduleLoaded', _.pick(descriptor, ['id', 'type', 'parentId', 'children']));
+        this._app.on('moduleLoaded', (descriptor) => {
+            kango.dispatchMessage('sb_' + this.__type() + 'ModuleLoaded', _.pick(descriptor, ['id', 'type', 'parentId', 'children']));
         });
 
         kango.addMessageListener('sb_FrameworkMessageDown', (event) => {
-            this._app.broadcast.call(this._app, [event.data.moduleId, event.data.messageName].concat(event.data.params || []));
+            this._app.broadcast.apply(this._app, [event.data.moduleId, event.data.messageName].concat(event.data.params || []));
         });
 
         this._rootModule = null;
+    }
+
+    __type() {
+        return 'generic';
     }
 
     // This should be strictly synchronous initializer
@@ -32,11 +36,12 @@ export class ProxyRoot extends Module {
     _upcastHandlers() {
         return {
             '*:*': function(event, ...args) {
-                kango.dispatchMessage('sb_FrameworkMessageUp', {
+                var message = {
                     moduleId: event.sender.id,
                     messageName: event.messageName,
                     params: args
-                })
+                };
+                kango.dispatchMessage('sb_FrameworkMessageUp', message);
             }
         };
     }

@@ -193,19 +193,19 @@ export class Application extends EventEmitter {
         while (currentModuleId) {
             currentDescriptor = this._moduleDescriptors[currentModuleId]; // Текущий модуль, у которого будем искать диспетчеры
 
-            var instance = currentDescriptor.moduleInstance,
-                dispatcher = instance.dispatcher;
+            if (!currentDescriptor.isProxied) {
+                var dispatcher = currentDescriptor.moduleInstance.dispatcher;
+                if (dispatcher) {
+                    var actions = _.flatten(_.compact([dispatcher['*:*'], dispatcher['*:' + messageName], dispatcher[notifier.type + ':' + messageName]]));
 
-            if (dispatcher) {
-                var actions = _.flatten(_.compact([dispatcher['*:*'], dispatcher['*:' + messageName], dispatcher[notifier.type + ':' + messageName]]));
+                    _.each(actions, function (action) { // Выполняем действия диспетчера
+                        var result = action(event, ...params);
 
-                _.each(actions, function (action) { // Выполняем действия диспетчера
-                    var result = action.apply(event, params);
-
-                    if (retValue === undefined) {
-                        retValue = result;
-                    }
-                });
+                        if (retValue === undefined) {
+                            retValue = result;
+                        }
+                    });
+                }
             }
 
             if (needStop) {
@@ -222,27 +222,20 @@ export class Application extends EventEmitter {
         var moduleDescriptors = this._messageRouter.queryModules(moduleId, selector, inclusive);
 
         _.each(moduleDescriptors, function(moduleDescriptor) {
-            handler(moduleDescriptor.instance, moduleDescriptor);
+            handler(moduleDescriptor.moduleInstance, moduleDescriptor);
         });
     }
 
-    broadcast(moduleId, message) {
-        var args = [].slice.call(arguments, 2),
-            lastIndexOfDelim = message.lastIndexOf(':'),
+    broadcast(moduleId, message, ...args) {
+        var lastIndexOfDelim = message.lastIndexOf(':'),
             selector = message.substr(0, lastIndexOfDelim),
-            action = message.substr(lastIndexOfDelim + 1),
-            retValue;
+            action = message.substr(lastIndexOfDelim + 1);
 
         this.processModules(moduleId, selector, function(moduleInstance) {
-            if (moduleInstance.interface) {
-                var handler = moduleInstance.interface[action];
-                if (handler) {
-                    retValue = handler.apply(moduleInstance.interface, args);
-                }
+            if (moduleInstance.interface && moduleInstance.interface[action]) {
+                moduleInstance.interface[action](...args);
             }
         });
-
-        return retValue;
     }
 
     // BEM related

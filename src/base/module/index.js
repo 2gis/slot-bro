@@ -1,17 +1,6 @@
 "use strict";
 import * as _ from "lodash";
 
-function _bindEach(handlersList, target) {
-    _.each(handlersList, function(val, key) {
-        if (!_.isFunction(val)) {
-            throw new TypeError('In module ' + target._moduleName + ' handler ' + key + ' is not a function');
-        }
-        handlersList[key] = _.bind(val, target);
-    });
-    return handlersList;
-}
-
-
 export class Module {
     constructor(application, moduleId, moduleName) {
         /**
@@ -61,7 +50,7 @@ export class Module {
     makeChild(childModuleName, initData = {}, onReady = _.noop) {
         var instance = this._loadModule({type: childModuleName, data: initData});
 
-        instance.init(initData, function(err) {
+        instance.init(initData, (err) => {
             if (err) {
                 instance.dispose();
             } else {
@@ -100,9 +89,20 @@ export class Module {
     /**
      *
      * @param moduleSelector
+     * @param params
      * @returns {*}
      */
-    broadcast(moduleSelector) {
-        return this._app.broadcast(this._moduleId, moduleSelector);
+    broadcast(moduleSelector, ...params) {
+        return this._app.broadcast(this._moduleId, moduleSelector, ...params);
     }
+}
+
+function _bindEach(handlersList, target) {
+    _.each(handlersList, function(val, key) {
+        if (!_.isFunction(val)) {
+            throw new TypeError('In module ' + target._moduleName + ' handler ' + key + ' is not a function');
+        }
+        handlersList[key] = _.bind(val, target);
+    });
+    return handlersList;
 }
