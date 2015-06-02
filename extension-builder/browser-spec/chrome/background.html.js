@@ -3,7 +3,7 @@ var _ = require('lodash');
 module.exports = function(config) {
     var scripts = [];
     var styles = [];
-    var body = '';
+    var body = "\n";
 
     var tpl = _.template([
         '<!DOCTYPE html>',
@@ -13,10 +13,11 @@ module.exports = function(config) {
                 '<%= styles %>',
             '</head>',
             '<body>',
-                '<%= body =%>',
+                '<%= body %>',
             '</body>',
         '</html>'
     ].join('\n'));
+
 
     if (config.watchBuild) {
         _.each(config.mockIncludes, function(path) {
@@ -41,9 +42,9 @@ module.exports = function(config) {
                 '<input type="text" id="url" value="http://nsu.ru">' +
                 '<button>open url</button>' +
                 '</form>' +
-                '<iframe id="page" width="100%" height="100%"></iframe>' +
+                '<iframe id="page" width="100%" height="900px"></iframe>' +
             '</div>' +
-        '</div>';
+        '</div>\n';
     }
 
     for (var i = 0; i < config.kangoIncludes.length; i++) {

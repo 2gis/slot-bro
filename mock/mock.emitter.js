@@ -470,3 +470,5 @@
         exports.EventEmitter = EventEmitter;
     }
 }.call(this));
+
+emitter = new EventEmitter;

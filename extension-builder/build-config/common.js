@@ -30,7 +30,7 @@ module.exports = function(baseConf) {
     ];
 
     baseConf.mockIncludes = [ // only with dev/test server include. root path
-        'mock/mock.emitter.js',
+        '/mock/mock.emitter.js',
         '/mock/chrome.browserAction.js',
         '/mock/chrome.cookies.js',
         '/mock/chrome.extension.js',
@@ -39,11 +39,11 @@ module.exports = function(baseConf) {
         '/mock/chrome.webNavigation.js',
         '/mock/chrome.windows.js',
 
-        'mock/mock.ui.js' // only for background.html
+        '/mock/mock.ui.js' // only for background.html
     ];
 
     baseConf.mockStyleIncludes = [
-        'mock/mock.ui.css' // only for background.html
+        '/mock/mock.ui.css' // only for background.html
     ];
 
     // webpack related

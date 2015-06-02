@@ -6,6 +6,15 @@ module.exports = function(gulp, plugins, config) {
         config.webpackCompiler.watch({
             aggregateTimeout: 300,
             poll: true
+        }, function(err, stats){
+            if (err) {
+                throw new plugins.util.PluginError("webpack", err);
+            }
+            plugins.util.log("[webpack]", stats.toString({}));
+        });
+
+        plugins.exec('node server.js', {}, function(err) {
+            if (err) cb(err);
         });
     });
 };

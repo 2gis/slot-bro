@@ -23,18 +23,13 @@ chrome.tabs = {
         emitter.emit('chrome.tabs.onUpdated', this.tabData.id, this.tabData);
     },
     updateTab: function(data) {
-        var self = this;
-
-        this.loadPage(data.url, function() {
-            emitter.emit('chrome.tabs.onUpdated', self.tabData.id, data);
+        this.loadPage(data.url, function(tabData) {
+            emitter.emit('chrome.tabs.onUpdated', tabData.id, tabData);
         });
     },
     createTab: function(data) {
-        var self = this;
-
-        this.loadPage(data.url, function() {
-            console.log('self.getCurrentTabData', self.getCurrentTabData())
-            emitter.emit('chrome.tabs.onCreated', self.getCurrentTabData());
+        this.loadPage(data.url, function(tabData) {
+            emitter.emit('chrome.tabs.onCreated', tabData);
             emitter.emit('chrome.windows.onFocusChanged', chrome.windows.getMyWindow().id);
         });
     },
@@ -43,15 +38,15 @@ chrome.tabs = {
         var tab = document.getElementById('page');
 
         tab.onload = function() {
-            var tabData = self.tabData = {
+            self.tabData = {
                 active: true,
                 windowId: 10,
                 id: 100,
                 url: tab.contentWindow.location.href,
                 title: tab.contentDocument.head.title
             };
-            emitCallback();
-        }
+            emitCallback(self.tabData);
+        };
 
         tab.src = url;
     },
