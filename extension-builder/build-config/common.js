@@ -30,6 +30,7 @@ module.exports = function(baseConf) {
     ];
 
     baseConf.mockIncludes = [ // only with dev/test server include. root path
+        'mock/mock.emitter.js',
         '/mock/chrome.browserAction.js',
         '/mock/chrome.cookies.js',
         '/mock/chrome.extension.js',
