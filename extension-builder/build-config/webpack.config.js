@@ -2,6 +2,7 @@ var webpack = require('webpack');
 
 module.exports = function(baseConf) {
     return {
+        devtool: 'eval-source-map',
         module: {
             loaders: [
                 {
