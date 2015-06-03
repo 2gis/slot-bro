@@ -3,10 +3,12 @@ var _ = require('lodash');
 module.exports = function(config) {
     return {
         "content_scripts": [
+            "js/vendor.chunk.js",
             "js/commons.chunk.js",
             "js/content.js"
         ],
         "background_scripts": [
+            "js/vendor.chunk.js",
             "js/commons.chunk.js",
             "js/background.js"
         ],
