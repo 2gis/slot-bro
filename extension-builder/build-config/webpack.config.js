@@ -2,6 +2,7 @@ var webpack = require('webpack');
 
 module.exports = function(baseConf) {
     return {
+        devtool: 'eval-source-map',
         module: {
             loaders: [
                 {
@@ -45,7 +46,8 @@ module.exports = function(baseConf) {
         },
 
         plugins: [
-            new webpack.optimize.CommonsChunkPlugin('commons.chunk.js'),
+            new webpack.optimize.CommonsChunkPlugin('commons.chunk.js', ['background', 'content', 'popup']),
+            new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.chunk.js'),
             new webpack.optimize.DedupePlugin(),
             new webpack.optimize.UglifyJsPlugin()
         ]

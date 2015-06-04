@@ -5,7 +5,8 @@ module.exports = function(initialConfig, buildNumber, debugMode) {
         entryPoints: {
             'background': __dirname + "/entryPoints/background.js",
             'content': __dirname + "/entryPoints/content.js",
-            'popup': __dirname + "/entryPoints/popup.js"
+            'popup': __dirname + "/entryPoints/popup.js",
+            'vendor': ['jquery', 'lodash']
         },
 
         browsers: ['chrome', 'firefox', 'safari'],
