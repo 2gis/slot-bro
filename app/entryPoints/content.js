@@ -1,4 +1,6 @@
 import * as _ from "lodash";
-import { Application } from "app";
+import { ContentApplication } from "base/application/content";
 
-var app = new Application(); // TODO: ContentApp
+var app = new ContentApplication();
+var rootModule = app.loadRootModule('helloWorldContent');
+rootModule.init();
