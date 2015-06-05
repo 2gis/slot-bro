@@ -1,36 +1,36 @@
 chrome.tabs = {
     onActivated: {
         addListener: function(callback) {
-            emitter.on('chrome.tabs.onActivated', callback);
+            __emitter.on('chrome.tabs.onActivated', callback);
         }
     },
     onCreated: {
         addListener: function(callback) {
-            emitter.on('chrome.tabs.onCreated', callback);
+            __emitter.on('chrome.tabs.onCreated', callback);
         }
     },
     onRemoved: {
         addListener: function(callback) {
-            emitter.on('chrome.tabs.onRemoved', callback);
+            __emitter.on('chrome.tabs.onRemoved', callback);
         }
     },
     onUpdated: {
         addListener: function(callback) {
-            emitter.on('chrome.tabs.onUpdated', callback);
+            __emitter.on('chrome.tabs.onUpdated', callback);
         }
     },
     changeTab: function() {
-        emitter.emit('chrome.tabs.onUpdated', this.tabData.id, this.tabData);
+        __emitter.emit('chrome.tabs.onUpdated', this.tabData.id, this.tabData);
     },
     updateTab: function(data) {
         this.loadPage(data.url, function(tabData) {
-            emitter.emit('chrome.tabs.onUpdated', tabData.id, tabData);
+            __emitter.emit('chrome.tabs.onUpdated', tabData.id, tabData);
         });
     },
     createTab: function(data) {
         this.loadPage(data.url, function(tabData) {
-            emitter.emit('chrome.tabs.onCreated', tabData);
-            emitter.emit('chrome.windows.onFocusChanged', chrome.windows.getMyWindow().id);
+            __emitter.emit('chrome.tabs.onCreated', tabData);
+            __emitter.emit('chrome.windows.onFocusChanged', chrome.windows.getMyWindow().id);
         });
     },
     loadPage: function(url, emitCallback) {
@@ -45,12 +45,30 @@ chrome.tabs = {
                 url: tab.contentWindow.location.href,
                 title: tab.contentDocument.head.title
             };
+
+            // inject content scripts
+            tab.contentWindow.__emitter = window.__emitter;
+            tab.contentWindow.chrome.runtime.onMessage = window.__runtime.onMessage;
+            tab.contentWindow.chrome.runtime.sendMessage = chrome.runtime.sendMessage;
+
+            window.__contentScripts.order.forEach(function(path) {
+                var script = document.createElement('script');
+                script.innerHTML = window.__contentScripts[path];
+                tab.contentDocument.body.appendChild(script);
+            });
+
             emitCallback(self.tabData);
         };
 
         tab.src = url;
     },
-    sendMessage: function(tabId, message) {},
+    sendMessage: function(tabId, data) {
+        try {
+            __emitter.emit('chrome.__runtime.onMessage', data, data);
+        } catch (e) {
+            console.log(e);
+        }
+    },
     query: function(query, callback) {
         return callback(this.getMyTabs());
     },

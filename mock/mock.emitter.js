@@ -471,4 +471,4 @@
     }
 }.call(this));
 
-emitter = new EventEmitter;
+window.__emitter = new EventEmitter();

@@ -1,11 +1,11 @@
 chrome.windows = {
     onFocusChanged: {
         addListener: function(callback) {
-            emitter.on('chrome.windows.onFocusChanged', callback);
+            __emitter.on('chrome.windows.onFocusChanged', callback);
         }
     },
     focusChangeEvent: function() {
-        emitter.emit('chrome.windows.onFocusChanged', this.getMyWindow().id);
+        __emitter.emit('chrome.windows.onFocusChanged', this.getMyWindow().id);
     },
     get: function(winId, callback) {
         callback(this.getMyWindow());
