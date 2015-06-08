@@ -3,7 +3,7 @@ var _ = require('lodash');
 
 module.exports = function(baseConf) {
     return {
-        devtool: 'eval-source-map',
+        devtool: '#inline-source-map',
         module: {
             loaders: [
                 {

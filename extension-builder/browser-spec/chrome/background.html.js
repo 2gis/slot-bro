@@ -39,7 +39,7 @@ module.exports = function(config) {
             '</div>' +
             '<div class="right-column">' +
                 '<form onsubmit="openUrl(); return false;">' +
-                '<input type="text" id="url" value="http://nsu.ru">' +
+                '<input type="text" id="url" value="http://nstu.ru">' +
                 '<button>open url</button>' +
                 '</form>' +
                 '<iframe id="page" width="100%" height="900px"></iframe>' +

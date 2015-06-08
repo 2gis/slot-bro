@@ -18,10 +18,19 @@ chrome.windows = {
     },
     getMyWindow: function() {
         return {
-            id: 10,
+            alwaysOnTop: false,
             focused: true,
-            windowType: 'normal'
+            height: 1057,
+            id: 1092,
+            incognito: false,
+            left: -123,
+            state: "maximized",
+            top: -1057,
+            type: "normal",
+            width: 1920
         };
     },
-    create: function() { console.log('chrome.windows.create', arguments); }
+    create: function() {
+        console.log('chrome.windows.create', arguments);
+    }
 };

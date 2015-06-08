@@ -13,9 +13,11 @@ window.__runtime = { // для контент скриптов
     }
 };
 
-chrome.runtime.sendMessage = function (data) {
+chrome.runtime.sendMessage = function (data, callback) {
     try {
-        __emitter.emit('chrome.runtime.onMessage', data, data); // ну, вот так, зато работает
+        __emitter.emit('chrome.runtime.onMessage', data, data, callback);
+        // Апи хрома разбивает сообщение на два, но с теми же именами свойств.
+        // Дублирование работает без всяких проблем.
     } catch(e){
         console.log(e);
     }

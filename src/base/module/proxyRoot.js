@@ -35,7 +35,7 @@ export class ProxyRoot extends Module {
 
     _upcastHandlers() {
         return {
-            '*:*': function(event, ...args) {
+            '*:*': (event, ...args) => {
                 var message = {
                     moduleId: event.sender.id,
                     messageName: event.messageName,

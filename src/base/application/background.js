@@ -30,26 +30,34 @@ export class BackgroundApplication extends Application {
         return 'background';
     }
 
-    getProxiedModuleId(windowId, moduleId) {
+    getProxiedModuleId(tabId, moduleId) {
         if (moduleId.indexOf('_proxied') === 0) {
             return moduleId;
         }
-        return `_proxied:${windowId}_${moduleId}`;
+        return `_proxied:${tabId}_${moduleId}`;
     }
 
-    addModuleProxied(windowId, proxyModuleId, minimalDescriptor) {
+    addModuleProxied(tabId, proxyModuleId, minimalDescriptor) {
         _.extend(minimalDescriptor, {
             isProxied: true,
             proxyLink: this._moduleDescriptors[proxyModuleId].moduleInstance,
 
             // rewrite id and parent id to match proxied naming
-            id: this.getProxiedModuleId(windowId, minimalDescriptor.id),
-            parentId: minimalDescriptor.parentId ? this.getProxiedModuleId(windowId, minimalDescriptor.parentId) : proxyModuleId
+            id: this.getProxiedModuleId(tabId, minimalDescriptor.id),
+            parentId: minimalDescriptor.parentId ? this.getProxiedModuleId(tabId, minimalDescriptor.parentId) : proxyModuleId
         });
 
         this._moduleDescriptors[minimalDescriptor.id] = minimalDescriptor;
+
+        removeInconsistentChilds(this._moduleDescriptors[minimalDescriptor.parentId], minimalDescriptor);
+
         this._moduleDescriptors[minimalDescriptor.parentId].children.push(minimalDescriptor.id);
         this.emit('moduleLoaded', minimalDescriptor);
+
+        function removeInconsistentChilds(parentDesc, minimalDesc) {
+            var wrongChildId = _.last(minimalDesc.id.split('_'));
+            parentDesc.children = _.remove(parentDesc.children, wrongChildId);
+        }
     }
 
     broadcast(moduleId, message, ...args) {

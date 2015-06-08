@@ -40,8 +40,8 @@ chrome.tabs = {
         tab.onload = function() {
             self.tabData = {
                 active: true,
-                windowId: 10,
-                id: 100,
+                windowId: chrome.windows.getMyWindow().id,
+                id: 758,
                 url: tab.contentWindow.location.href,
                 title: tab.contentDocument.head.title
             };
@@ -51,7 +51,7 @@ chrome.tabs = {
             tab.contentWindow.chrome.runtime.onMessage = window.__runtime.onMessage;
             tab.contentWindow.chrome.runtime.sendMessage = chrome.runtime.sendMessage;
 
-            window.__contentScripts.order.forEach(function(path) {
+            window.__contentScripts.order.forEach(function bindScript(path) {
                 var script = document.createElement('script');
                 script.innerHTML = window.__contentScripts[path];
                 tab.contentDocument.body.appendChild(script);
@@ -62,9 +62,9 @@ chrome.tabs = {
 
         tab.src = url;
     },
-    sendMessage: function(tabId, data) {
+    sendMessage: function(tabId, data, callback) {
         try {
-            __emitter.emit('chrome.__runtime.onMessage', data, data);
+            __emitter.emit('chrome.__runtime.onMessage', data, data, callback);
         } catch (e) {
             console.log(e);
         }
@@ -73,7 +73,7 @@ chrome.tabs = {
         return callback(this.getMyTabs());
     },
     getMyTabs: function() {
-        return [this.tabData];
+        return this.tabData ? [this.tabData] : [];
     },
     getCurrentTabData: function() {
         return this.tabData;
