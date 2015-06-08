@@ -3,7 +3,6 @@ var app = express();
 
 var port = 2000;
 
-console.log(__dirname);
 app.use(express.static(__dirname));
 app.use('/', function(req, res){
     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');

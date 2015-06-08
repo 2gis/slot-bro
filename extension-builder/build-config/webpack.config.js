@@ -49,7 +49,7 @@ module.exports = function(baseConf) {
             new webpack.optimize.CommonsChunkPlugin('commons.chunk.js', ['background', 'content', 'popup']),
             new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.chunk.js'),
             new webpack.optimize.DedupePlugin(),
-            (baseConf.debugMode ? null : new webpack.optimize.UglifyJsPlugin())
+            new webpack.optimize.UglifyJsPlugin()
         ])
     };
 };
