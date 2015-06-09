@@ -1,3 +1,7 @@
+/**
+ * Not implemented
+ * https://developer.chrome.com/extensions/webNavigation
+ */
 chrome.webNavigation = {
     onBeforeNavigate: {
         addListener: function(callback) {
@@ -8,6 +12,5 @@ chrome.webNavigation = {
         addListener: function(callback) {
             __emitter.on('chrome.webNavigation.onCompleted', callback);
         }
-    },
-    beforeNavigate: function() {}
+    }
 };

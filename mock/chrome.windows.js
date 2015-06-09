@@ -1,21 +1,46 @@
 chrome.windows = {
+    /**
+     * Window focus listener
+     * https://developer.chrome.com/extensions/windows#event-onFocusChanged
+     */
     onFocusChanged: {
+        /**
+         * Listener for change focus on "new tab loaded"
+         * @param {funciton} callback
+         */
         addListener: function(callback) {
             __emitter.on('chrome.windows.onFocusChanged', callback);
         }
     },
-    focusChangeEvent: function() {
-        __emitter.emit('chrome.windows.onFocusChanged', this.getMyWindow().id);
-    },
+    /**
+     * Returns to callback one current window data
+     * https://developer.chrome.com/extensions/windows#method-get
+     * @param {number} winId - Not important, but need to send
+     * @param {function} callback - result sends in this callback
+     */
     get: function(winId, callback) {
-        callback(this.getMyWindow());
+        this.getCurrent(callback);
     },
+    /**
+     * Returns to callback windowData[] of one current window
+     * https://developer.chrome.com/extensions/windows#method-getAll
+     * @param {function} callback - result sends in this callback
+     */
     getAll: function(callback) {
         callback([this.getMyWindow()]);
     },
+    /**
+     * Returns to callback one current window data
+     * https://developer.chrome.com/extensions/windows#method-getCurrent
+     * @param {function} callback - result sends in this callback
+     */
     getCurrent: function(callback) {
         callback(this.getMyWindow());
     },
+    /**
+     * Mock helper
+     * @returns {Object} - static window data
+     */
     getMyWindow: function() {
         return {
             alwaysOnTop: false,
@@ -30,6 +55,10 @@ chrome.windows = {
             width: 1920
         };
     },
+    /**
+     * Not implemented
+     * https://developer.chrome.com/extensions/windows#method-create
+     */
     create: function() {
         console.log('chrome.windows.create', arguments);
     }
