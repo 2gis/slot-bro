@@ -9,7 +9,7 @@ import * as _ from "lodash";
  * @param {Array} moduleDescriptors - Дескрипторы модулей в приложении.
  * @returns {Function} Функция `queryModules`, которая умеет запрашивать модули по селектору.
  */
-export default class {
+export default class MessageRouter {
     constructor(descriptorsList) {
         /**
          * Типы предикатов.
@@ -115,20 +115,20 @@ export default class {
          * @param {int} index - Позиция модуля относительно родителя.
          * @param {Array} all - Все родительские модули.
          */
-        function accumulate(id, index, all) {
+        var accumulate = (id, index, all) => {
             var moduleDescriptor = this._moduleDescriptors[id];
 
             if (matchType(moduleDescriptor.type) && this._matchPredicates(moduleDescriptor.moduleConf, moduleDescriptor, predicates, index, all)) {
                 result.push(id);
             }
 
-            _.each(moduleDescriptor.children, _.bind(accumulate, this));
-        }
+            _.each(moduleDescriptor.children, accumulate);
+        };
 
         if (inclusive) {
-            _.bind(accumulate, this)(fromId, 0, []);
+            accumulate(fromId, 0, []);
         } else {
-            _.each(currModuleDesc.children, _.bind(accumulate, this));
+            _.each(currModuleDesc.children, accumulate);
         }
 
         // если последний предикат — :first или :last, возвращаем первый или последний модуль из выборки
@@ -173,10 +173,10 @@ export default class {
         }
 
         var indexOfEq = name.indexOf('=');
-        var reference = null; // то что стоит после равно
+        var ref = null; // то что стоит после равно
 
         if (indexOfEq != -1) {
-            reference = name.substr(indexOfEq + 1);
+            ref = name.substr(indexOfEq + 1);
             name = name.substr(0, indexOfEq);
         }
 
@@ -191,12 +191,7 @@ export default class {
             });
         }
 
-        return {
-            name: name,
-            ref: reference,
-            type: type,
-            args: args
-        };
+        return {name, ref, type, args};
     }
 
     /**

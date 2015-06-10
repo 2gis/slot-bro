@@ -60,6 +60,7 @@ gulp.task('extension.build', function(callback) {
         ['kango.extract', 'libs.build'],
         ['webpack.compile', 'kango.copy'],
         'build.all',
+        (watchFlag ? 'webpack.watch' : null),
         'libs.pack',
         (packFlag ? ['makePackage.all', 'makeUpdateFile.all'] : null),
         (packFlag ? 'cleanup.buildDir' : null),

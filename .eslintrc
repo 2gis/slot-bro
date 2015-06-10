@@ -44,7 +44,11 @@
     "Components": true, // firefox internals
     "XMLHttpRequest": true,
     "setTimeout": true,
-    "clearTimeout": true
+    "clearTimeout": true,
+    "chrome": true,
+    "window": true,
+    "document": true,
+    "__emitter": true
     // e.g. "angular": true
   },
 

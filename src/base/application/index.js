@@ -129,8 +129,6 @@ export class Application extends EventEmitter {
             throw new ReferenceError('Must initialize root module before other modules invokation, see .loadRootModule');
         }
 
-        var app = this;
-
         var parentId = data.parentId,
             moduleId = data.id || this._nextModuleId(parentId),
             moduleName = data.type;
@@ -140,7 +138,7 @@ export class Application extends EventEmitter {
             throw new Error('Bad moduleClass: ' + moduleName);
         }
 
-        var moduleInstance = new ModuleClass(app, moduleId, moduleName);
+        var moduleInstance = new ModuleClass(this, moduleId, moduleName);
         moduleInstance.uniqueId = moduleId;
         moduleInstance.type = moduleName;
 
