@@ -70,7 +70,7 @@ export class BackgroundApplication extends Application {
             if (descriptor.isProxied) {
                 descriptor.proxyLink.downcast(moduleId, message, args);
             } else {
-                var moduleInstance = descriptor.instance;
+                var moduleInstance = descriptor.moduleInstance;
                 if (moduleInstance.interface && moduleInstance.interface[action]) {
                     moduleInstance.interface[action](...args);
                 }
