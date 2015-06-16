@@ -45,38 +45,61 @@ chrome.extension = {
 (function loadContentScripts() {
     var chromeFilesPath = '/__extbuild/src/chrome/';
     window.__contentScripts = {};
+    window.__popupScripts = {};
 
     getExtensionInfo(function(info) {
         window.__contentScripts.order = info.content_scripts;
+        window.__popupScripts.order = info.popup_scripts;
 
         info.content_scripts.unshift('includes/content.js');
 
         info.content_scripts.forEach(function(path) {
             getScript(path, function(code) {
                 window.__contentScripts[path] = code;
-            })
+            });
+        });
+
+        info.popup_scripts.forEach(function(path) {
+            getScript(path, function(code) {
+                window.__popupScripts[path] = code;
+            });
         });
     });
 
+    loadManifest(function(manifest) {
+        var popupFile = manifest.browser_action.default_popup;
+        if (popupFile) {
+            chrome.browserAction.popupPath = popupFile;
+        }
+    });
+
     function getScript(path, callback) {
+        ajax(chromeFilesPath + path, callback);
+    }
+
+    function getExtensionInfo(callback) {
+        ajax(chromeFilesPath + 'extension_info.json', function(responseText){
+            callback(JSON.parse(responseText));
+        });
+    }
+
+    function loadManifest(callback) {
+        ajax(chromeFilesPath + 'manifest.json', function(responseText){
+            callback(JSON.parse(responseText));
+        });
+    }
+
+    function ajax(path, callback) {
         var xhr = new XMLHttpRequest();
 
-        xhr.open('GET', chromeFilesPath + path);
+        xhr.open('GET', path, true);
 
         xhr.onload = function() {
             callback(xhr.responseText);
         };
 
-        xhr.send(null);
-    }
-
-    function getExtensionInfo(callback) {
-        var xhr = new XMLHttpRequest();
-
-        xhr.open('GET', chromeFilesPath + 'extension_info.json');
-
-        xhr.onload = function() {
-            callback(JSON.parse(xhr.responseText));
+        xhr.onerror = function() {
+            console.error('Error on loading file:', path);
         };
 
         xhr.send(null);

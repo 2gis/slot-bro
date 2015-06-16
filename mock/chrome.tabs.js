@@ -105,7 +105,7 @@ chrome.tabs = {
             };
 
             self.injectMocks(frame);
-            self.injectScripts(frame);
+            self.injectScripts(frame, window.__contentScripts);
 
             emitCallback(self.tabData);
         };
@@ -114,13 +114,13 @@ chrome.tabs = {
     },
     /**
      * Mock helper
-     * Inject source code of content scripts. Scripts loads in chrome.extension.js
+     * Inject source code of content or popup scripts. Scripts loads in chrome.extension.js
      * @param {Frame} frame
      */
-    injectScripts: function(frame) {
-        window.__contentScripts.order.forEach(function bindScript(path) {
+    injectScripts: function(frame, scripts) {
+        scripts.order.forEach(function bindScript(path) {
             var script = document.createElement('script');
-            script.innerHTML = window.__contentScripts[path];
+            script.innerHTML = scripts[path];
             frame.contentDocument.body.appendChild(script);
         });
     },

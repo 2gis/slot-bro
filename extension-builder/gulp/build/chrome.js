@@ -29,6 +29,9 @@ module.exports = function(gulp, plugins, config) {
     gulp.task('build.chrome.makeBackgroundHtml', function(cb) {
         common.writeFile('chrome', 'background', cb);
     });
+    gulp.task('build.chrome.makePopupHtml', function(cb) {
+        common.writeFile('chrome', 'popup', cb);
+    });
     gulp.task('build.chrome.makeExtensionInfoJson', function(cb) {
         common.writeFile('chrome', 'extension_info', cb);
     });
@@ -53,6 +56,7 @@ module.exports = function(gulp, plugins, config) {
             'build.chrome.makeManifestJson',
             'build.chrome.makeExtensionInfoJson',
             'build.chrome.makeBackgroundHtml',
+            'build.chrome.makePopupHtml',
             'build.chrome.makeLocalesMetadir',
             cb
         );

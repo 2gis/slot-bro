@@ -1,5 +1,5 @@
-import * as _ from "lodash";
-import { Module } from "base/module";
+import * as _ from 'lodash';
+import { Module } from 'base/module';
 
 export class HelloWorldContent extends Module {
     init(initData, onReady) {
@@ -8,7 +8,7 @@ export class HelloWorldContent extends Module {
         /*eslint-enable no-undef, no-console */
 
         setTimeout(() => {
-            this.notify('contentHello', 'This was transferred as message!');
+            this.notify('contentHello', 'This was transferred as message from content!');
         }, 500);
     }
 
