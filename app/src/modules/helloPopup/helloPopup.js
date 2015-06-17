@@ -5,7 +5,7 @@ export class HelloPopup extends Module {
     init(initData, onReady) {
         console.log('Hello world from popup');
 
-        setTimeout(() => this.notify('popupHello', 'This was transfered message from popup'), 1000);
+        setTimeout(() => this.notify('popupHello', 'This was transferred message from popup'), 1000);
     }
 
     _upcastHandlers() {
@@ -14,5 +14,11 @@ export class HelloPopup extends Module {
                 console.log(`hello from popup and msg: ${msg} from background`, e);
             }
         }
+    }
+
+    _downcastHandlers() {
+        return {
+            'ping': msg => console.log('Reply from background:', msg)
+        };
     }
 }
