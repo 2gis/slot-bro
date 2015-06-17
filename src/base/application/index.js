@@ -134,7 +134,9 @@ export class Application extends EventEmitter {
             moduleName = data.type;
 
         var ModuleClass = Application.requireModule(moduleName);
-        if (!_.isFunction(ModuleClass)) { // если возвращает не функцию — ругаемся
+        if (!_.isFunction(ModuleClass)) {
+            // todo: если возвращает не функцию — ругаемся, проверить будет ли
+            // _.isFunction так же работать с нативными классами
             throw new Error('Bad moduleClass: ' + moduleName);
         }
 

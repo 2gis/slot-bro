@@ -29,8 +29,13 @@ module.exports = function(baseConf) {
         "kango/initialize.js"
     ];
 
+    baseConf.kangoApi4Popup = [
+        "kango-ui/kango_api.js"
+    ];
+
     baseConf.mockIncludes = [ // only with dev/test server include. root path
         '/mock/mock.emitter.js',
+
         '/mock/chrome.browserAction.js',
         '/mock/chrome.cookies.js',
         '/mock/chrome.extension.js',
@@ -40,6 +45,16 @@ module.exports = function(baseConf) {
         '/mock/chrome.windows.js',
 
         '/mock/mock.ui.js' // only for background.html
+    ];
+
+    baseConf.mockPopupIncludes = [
+        '/mock/chrome.browserAction.js',
+        '/mock/chrome.cookies.js',
+        '/mock/chrome.extension.js',
+        '/mock/chrome.runtime.js',
+        '/mock/chrome.tabs.js',
+        '/mock/chrome.webNavigation.js',
+        '/mock/chrome.windows.js'
     ];
 
     baseConf.mockStyleIncludes = [

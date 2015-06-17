@@ -12,6 +12,11 @@ module.exports = function(config) {
             "js/commons.chunk.js",
             "js/background.js"
         ],
+        "popup_scripts": [
+            "js/vendor.chunk.js",
+            "js/commons.chunk.js",
+            "js/popup.js"
+        ],
         "description": config.description,
         "creator": config.author,
         "homepage_url": config.homepageUrl,

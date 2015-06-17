@@ -25,7 +25,7 @@ module.exports = function(initialConfig, buildNumber, debugMode) {
         'title': "Kango",
         'description': 'My browser extension',
         'homepageUrl': 'http://myextension.ru/',
-        // 'popupRes': 'popup.html', // TODO
+        'popupRes': 'popup.html',
         'backgroundRes': 'background.html',
         'filename': 'myextension',
         'cdnBaseUrl': 'https://myextension.ru/builds/',
