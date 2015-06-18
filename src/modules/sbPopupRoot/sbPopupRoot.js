@@ -7,7 +7,7 @@ import * as _ from "lodash";
 export class SbPopupRoot extends ProxyRoot {
     constructor(...args) {
         super(...args);
-        kango.dispatchMessage('sb_SlavePopupAppCreated', true);
+        kango.dispatchMessage('sb_SlavePopupAppCreated', 'true');
     }
 
     __type() {

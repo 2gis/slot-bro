@@ -7,6 +7,9 @@ module.exports = function(gulp, plugins, config) {
     gulp.task('build.safari.makeBackgroundHtml', function(cb) {
         common.writeFile('safari', 'background', cb);
     });
+    gulp.task('build.safari.makePopupHtml', function(cb) {
+        common.writeFile('safari', 'popup', cb);
+    });
     gulp.task('build.safari.makeExtensionInfoJson', function(cb) {
         common.writeFile('safari', 'extension_info', cb);
     });
@@ -35,6 +38,7 @@ module.exports = function(gulp, plugins, config) {
             'build.safari.makeInfoPlist',
             'build.safari.makeExtensionInfoJson',
             'build.safari.makeBackgroundHtml',
+            'build.safari.makePopupHtml',
             cb
         );
     });

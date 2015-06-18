@@ -51,8 +51,6 @@ module.exports = function(baseConf) {
         '/mock/chrome.browserAction.js',
         '/mock/chrome.cookies.js',
         '/mock/chrome.extension.js',
-        '/mock/chrome.runtime.js',
-        '/mock/chrome.tabs.js',
         '/mock/chrome.webNavigation.js',
         '/mock/chrome.windows.js'
     ];

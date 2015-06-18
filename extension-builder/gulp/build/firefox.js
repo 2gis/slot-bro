@@ -7,6 +7,9 @@ module.exports = function(gulp, plugins, config) {
     gulp.task('build.firefox.makeBackgroundHtml', function(cb) {
         common.writeFile('firefox', 'background', cb);
     });
+    gulp.task('build.firefox.makePopupHtml', function(cb) {
+        common.writeFile('firefox', 'popup', cb);
+    });
     gulp.task('build.firefox.makeExtensionInfoJson', function(cb) {
         common.writeFile('firefox', 'extension_info', cb);
     });
@@ -35,6 +38,7 @@ module.exports = function(gulp, plugins, config) {
             'build.firefox.makeExtensionInfoJson',
             'build.firefox.makeChromeManifest',
             'build.firefox.makeBackgroundHtml',
+            'build.firefox.makePopupHtml',
             cb
         );
     });

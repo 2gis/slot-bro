@@ -24,8 +24,11 @@ export class SbPopupProxy extends ProxyModule {
 
     _bindHandlers() {
         kango.addMessageListener('sb_' + this.__type() + 'ModuleLoaded', (event) => {
-            event.target.getId = () => "Popup"; // todo: fix popup window identification
-            this._app.addModuleProxied("Popup", this._moduleId, event.data);
+            if (!event.target.getId) {
+                event.target.getId = () => "Popup";
+                // todo: fix popup window identification
+            }
+            this._app.addModuleProxied(event.target.getId(), this._moduleId, event.data);
         });
     }
 }
