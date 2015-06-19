@@ -28,7 +28,7 @@ export class HelloWorld extends Module {
         this.broadcast('helloPopup:ping', 'Hello from background after popup msg!');
     }
 
-    _upcastHandlers() {
+    _childHandlers() {
         return {
             '*:contentHello': this._waitForContentMessage,
             '*:popupHello': this._waitForPopupMessage

@@ -8,7 +8,7 @@ export class HelloPopup extends Module {
         setTimeout(() => this.notify('popupHello', 'This was transferred message from popup'), 1000);
     }
 
-    _downcastHandlers() {
+    _parentHandlers() {
         return {
             'ping': msg => console.log('Reply from background:', msg)
         };

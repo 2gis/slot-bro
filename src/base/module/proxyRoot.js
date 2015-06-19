@@ -33,7 +33,7 @@ export class ProxyRoot extends Module {
         return this._rootModule;
     }
 
-    _upcastHandlers() {
+    _childHandlers() {
         return {
             '*:*': (event, ...args) => {
                 var message = {

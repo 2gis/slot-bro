@@ -8,7 +8,7 @@ export class PopupButton extends Module {
         /*eslint-enable no-undef, no-console */
     }
 
-    _downcastHandlers() {
+    _parentHandlers() {
         return {
             'popup': details => kango.ui.browserButton.setPopup(details),
             'icon': url => kango.ui.browserButton.setIcon(url)

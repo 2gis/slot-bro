@@ -18,7 +18,7 @@ export class HelloWorldContent extends Module {
         /*eslint-enable no-undef, no-console */
     }
 
-    _downcastHandlers() {
+    _parentHandlers() {
         return {
             'ping': this._waitForReply
         };
