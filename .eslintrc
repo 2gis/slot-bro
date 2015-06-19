@@ -22,7 +22,7 @@
 
   "env": {
     "es6": true,
-    "browser": false,     // browser global variables.
+    "browser": true,     // browser global variables.
     "node": false,        // Node.js global variables and Node.js-specific rules.
     "amd": false,         // defines require() and define() as global variables as per the amd spec.
     "mocha": false,       // adds all of the Mocha testing global variables.
@@ -42,12 +42,7 @@
     "require": true,
     "kango": true,
     "Components": true, // firefox internals
-    "XMLHttpRequest": true,
-    "setTimeout": true,
-    "clearTimeout": true,
     "chrome": true,
-    "window": true,
-    "document": true,
     "__emitter": true
     // e.g. "angular": true
   },

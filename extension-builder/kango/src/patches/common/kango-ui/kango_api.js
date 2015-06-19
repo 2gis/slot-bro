@@ -2,15 +2,14 @@
     var fireReady = win.KangoAPI._fireReady;
 
     win.KangoAPI._fireReady = function() {
+        var scripts;
         fireReady.call(win.KangoAPI);
 
-        if (!win.KangoAPI.getBackgroundPage()) {
-            return console.error('Error on load popup scripts, no background page');
+        if (!win.kango || !win.KangoAPI) {
+            return;
         }
 
-        var require = win.KangoAPI.getBackgroundPage()._kangoLoader.require;
-
-        var scripts = require('kango/extension_info').popup_scripts;
+        scripts = win.kango.getExtensionInfo().popup_scripts;
 
         bindScript(scripts);
     };
