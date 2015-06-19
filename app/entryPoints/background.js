@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import { BackgroundApplication } from "base/application/background";
 
 var app = new BackgroundApplication();

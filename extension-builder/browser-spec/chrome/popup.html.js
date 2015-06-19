@@ -27,8 +27,6 @@ module.exports = function(config) {
         scripts.push('<script src="' + path + '" type="text/javascript"></script>');
     });
 
-    //_.each(config.)
-
     return tpl({
         scripts: scripts.join('\n'),
         styles: styles.join('\n')

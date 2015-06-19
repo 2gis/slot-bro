@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { TimeoutQueue } from "../lib/timeoutQueue";
 
 const userIdStorageKey = '_user_unique_id';

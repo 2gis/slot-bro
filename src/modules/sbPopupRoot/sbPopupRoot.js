@@ -1,5 +1,5 @@
 import { ProxyRoot } from 'base/module/proxyRoot';
-import * as _ from "lodash";
+import _ from "lodash";
 
 /**
  * Content script root module

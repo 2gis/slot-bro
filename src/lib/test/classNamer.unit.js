@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import * as classNamer from '../classNamer';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 describe('lib/classNamer', function() {
     it('should make proper modifier classes', function() {

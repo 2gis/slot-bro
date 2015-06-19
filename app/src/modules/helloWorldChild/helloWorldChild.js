@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import { Module } from "base/module";
 
 export class HelloWorldChild extends Module {

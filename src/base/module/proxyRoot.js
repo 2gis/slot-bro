@@ -1,5 +1,5 @@
 import { Module } from './index.js';
-import * as _ from "lodash";
+import _ from "lodash";
 
 export class ProxyRoot extends Module {
     constructor(...args) {

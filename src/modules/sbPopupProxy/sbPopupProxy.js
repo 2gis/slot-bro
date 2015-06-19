@@ -1,5 +1,5 @@
 import { ProxyModule } from 'base/module/proxy';
-import * as _ from "lodash";
+import _ from "lodash";
 
 /**
  * Proxy module for content scripts,

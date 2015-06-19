@@ -1,5 +1,5 @@
 import { Application } from "./index"
-import * as _ from "lodash";
+import _ from "lodash";
 
 export class BackgroundApplication extends Application {
     constructor(...args) {
