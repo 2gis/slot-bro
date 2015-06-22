@@ -1,5 +1,5 @@
 import * as namer from './classNamer';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 export function initJqueryMod($) {
     if (typeof $ != 'undefined') {

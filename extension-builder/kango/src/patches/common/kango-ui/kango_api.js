@@ -1,15 +1,17 @@
 (function(win) {
     var fireReady = win.KangoAPI._fireReady;
-    var require = chrome.extension.getBackgroundPage()._kangoLoader.require;
 
     win.KangoAPI._fireReady = function() {
+        var scripts;
         fireReady.call(win.KangoAPI);
 
-        if (win.KangoAPI.getBackgroundPage()) {
-            var scripts = require('kango/extension_info').popup_scripts;
-
-            bindScript(scripts);
+        if (!win.kango || !win.KangoAPI) {
+            return;
         }
+
+        scripts = win.kango.getExtensionInfo().popup_scripts;
+
+        bindScript(scripts);
     };
 
     function bindScript(scripts, i) {

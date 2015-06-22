@@ -6,7 +6,6 @@ function openPopup() {
     var popup = document.getElementById('popup');
     popup.onload = function() {
         chrome.browserAction.clickOnExtensionButton();
-        chrome.tabs.injectScripts(popup, window.__popupScripts);
 
     };
     popup.src = chrome.browserAction.popupPath;

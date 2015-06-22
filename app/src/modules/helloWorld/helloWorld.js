@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import { Module } from "base/module";
 
 export class HelloWorld extends Module {
@@ -14,7 +14,7 @@ export class HelloWorld extends Module {
 
     _waitForContentMessage(e, msg) {
         /*eslint-disable no-undef, no-console */
-        console.log('Hello from child: ' + msg);
+        console.log('Hello from content child: ' + msg);
         /*eslint-enable no-undef, no-console */
         this.broadcast('helloWorldContent:ping', 'Hello from background after content message!');
         this.broadcast('popupButton:popup', {url: 'popup.html'});
@@ -23,12 +23,12 @@ export class HelloWorld extends Module {
 
     _waitForPopupMessage(e, msg) {
         /*eslint-disable no-undef, no-console */
-        console.log('Hello from child: ' + msg);
+        console.log('Hello from popup child: ' + msg);
         /*eslint-enable no-undef, no-console */
-        this.broadcast('helloWorldContent:ping', 'Hello from background after popup msg!');
+        this.broadcast('helloPopup:ping', 'Hello from background after popup msg!');
     }
 
-    _upcastHandlers() {
+    _childHandlers() {
         return {
             '*:contentHello': this._waitForContentMessage,
             '*:popupHello': this._waitForPopupMessage

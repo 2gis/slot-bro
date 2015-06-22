@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { Module } from 'base/module';
 
 export class HelloWorldContent extends Module {
@@ -18,7 +18,7 @@ export class HelloWorldContent extends Module {
         /*eslint-enable no-undef, no-console */
     }
 
-    _downcastHandlers() {
+    _parentHandlers() {
         return {
             'ping': this._waitForReply
         };

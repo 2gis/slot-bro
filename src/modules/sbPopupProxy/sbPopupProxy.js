@@ -1,5 +1,5 @@
 import { ProxyModule } from 'base/module/proxy';
-import * as _ from "lodash";
+import _ from "lodash";
 
 /**
  * Proxy module for content scripts,
@@ -20,5 +20,15 @@ export class SbPopupProxy extends ProxyModule {
 
     downcast(moduleId, messageName, params) {
         this._popupScript.dispatchMessage('sb_FrameworkMessageDown', { moduleId, messageName, params });
+    }
+
+    _bindHandlers() {
+        kango.addMessageListener('sb_' + this.__type() + 'ModuleLoaded', (event) => {
+            if (!event.target.getId) {
+                event.target.getId = () => "Popup";
+                // todo: fix popup window identification
+            }
+            this._app.addModuleProxied(event.target.getId(), this._moduleId, event.data);
+        });
     }
 }

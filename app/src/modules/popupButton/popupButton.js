@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { Module } from 'base/module'
 
 export class PopupButton extends Module {
@@ -8,7 +8,7 @@ export class PopupButton extends Module {
         /*eslint-enable no-undef, no-console */
     }
 
-    _downcastHandlers() {
+    _parentHandlers() {
         return {
             'popup': details => kango.ui.browserButton.setPopup(details),
             'icon': url => kango.ui.browserButton.setIcon(url)

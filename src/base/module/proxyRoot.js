@@ -1,5 +1,5 @@
 import { Module } from './index.js';
-import * as _ from "lodash";
+import _ from "lodash";
 
 export class ProxyRoot extends Module {
     constructor(...args) {
@@ -33,7 +33,7 @@ export class ProxyRoot extends Module {
         return this._rootModule;
     }
 
-    _upcastHandlers() {
+    _childHandlers() {
         return {
             '*:*': (event, ...args) => {
                 var message = {

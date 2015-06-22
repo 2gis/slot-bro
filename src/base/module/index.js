@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 
 export class Module {
     constructor(application, moduleId, moduleName) {
@@ -9,19 +9,19 @@ export class Module {
         this._moduleId = moduleId;
         this._moduleName = moduleName;
         this._modules = {};
-        this.interface = _bindEach(this._downcastHandlers(), this);
-        this.dispatcher = _bindEach(this._upcastHandlers(), this);
+        this.interface = _bindEach(this._parentHandlers(), this);
+        this.dispatcher = _bindEach(this._childHandlers(), this);
     }
 
     init(initData, callback) {
         callback();
     }
 
-    _upcastHandlers() {
+    _childHandlers() {
         return {};
     }
 
-    _downcastHandlers() {
+    _parentHandlers() {
         return {};
     }
 

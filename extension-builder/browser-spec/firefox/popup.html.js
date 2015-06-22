@@ -17,12 +17,6 @@ module.exports = function(config) {
         '</html>'
     ].join('\n'));
 
-    if (config.watchBuild) {
-        _.each(config.mockPopupIncludes, function(path) {
-            scripts.push('<script src="' + path + '" type="text/javascript"></script>');
-        });
-    }
-
     _.each(config.kangoApi4Popup, function(path) {
         scripts.push('<script src="' + path + '" type="text/javascript"></script>');
     });

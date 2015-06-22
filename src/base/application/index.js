@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import $ from "jquery";
 import MessageRouter from "./../../lib/messageRouter";
 import { modificatorClass, elementClass } from "./../../lib/classNamer";

@@ -6,6 +6,7 @@ module.exports = function(baseConf) {
         'extension_info': __dirname + '/../browser-spec/firefox/extension_info.js',
         'install': __dirname + '/../browser-spec/firefox/install.rdf.js',
         'chrome': __dirname + '/../browser-spec/firefox/chrome.manifest.js',
+        'popup': __dirname + '/../browser-spec/firefox/popup.html.js',
         'background': __dirname + '/../browser-spec/firefox/background.html.js'
     };
 
@@ -14,6 +15,7 @@ module.exports = function(baseConf) {
         'extension_info': buildDir + '/extension_info.json',
         'install': buildDir + '/install.rdf',
         'chrome': buildDir + '/chrome.manifest',
+        'popup': buildDir + '/popup.html',
         'background': buildDir + '/background.html'
     };
 
