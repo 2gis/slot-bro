@@ -29,6 +29,8 @@
     "gulp-shell": "^0.4.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.4",
+    "handlebars": "^3.0.3",
+    "handlebars-loader": "^1.0.2",
     "less": "^2.5.0",
     "less-loader": "^2.2.0",
     "mocha": "^2.2.4",
