@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
-export default function module(moduleName, { fn, data: { root } }) {
-    var childId = root._childs[moduleName];
-    var { moduleInstance: moduleInstance } = root._app._getModuleDescriptorById(childId);
+export default function moduleHelper(moduleName, { fn, data: { root } }) {
+    var moduleInstance = _.find(root._modules, module => module.type == moduleName);
+
     var rendered = moduleInstance.render();
 
     if (!moduleInstance) {

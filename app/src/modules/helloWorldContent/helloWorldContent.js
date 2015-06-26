@@ -10,6 +10,8 @@ export class HelloWorldContent extends Module {
         setTimeout(() => {
             this.notify('contentHello', 'This was transferred as message from content!');
         }, 500);
+
+        super.init(initData, onReady);
     }
 
     _waitForReply(msg) {

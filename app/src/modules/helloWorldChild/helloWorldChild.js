@@ -9,5 +9,6 @@ export class HelloWorldChild extends Module {
         /*eslint-disable no-undef, no-console */
         console.log('Hello world from child!');
         /*eslint-enable no-undef, no-console */
+        super.init(initData, onReady);
     }
 }

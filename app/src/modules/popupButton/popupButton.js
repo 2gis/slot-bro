@@ -6,6 +6,8 @@ export class PopupButton extends Module {
         /*eslint-disable no-undef, no-console */
         console.log('Hello world from popupButton!');
         /*eslint-enable no-undef, no-console */
+
+        super.init(initData, onReady);
     }
 
     _parentHandlers() {

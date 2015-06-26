@@ -11,7 +11,7 @@ export class HelloPopup extends Module {
             this.notify('popupHello', 'This was transferred message from popup');
         }, 1000);
 
-        onReady();
+        super.init(initData, onReady);
     }
 
     _parentHandlers() {

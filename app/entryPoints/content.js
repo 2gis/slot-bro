@@ -3,4 +3,4 @@ import { ContentApplication } from "base/application/content";
 
 var app = new ContentApplication();
 var rootModule = app.loadRootModule('helloWorldContent');
-rootModule.init();
+rootModule.init({}, _.noop);

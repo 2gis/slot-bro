@@ -12,7 +12,6 @@ export class Module {
         this._moduleId = moduleId;
         this._moduleName = moduleName;
         this._modules = {};
-        this._childs = {};
         this.interface = _bindEach(this._parentHandlers(), this);
         this.dispatcher = _bindEach(this._childHandlers(), this);
     }
@@ -58,13 +57,10 @@ export class Module {
             if (err) {
                 instance.dispose();
             } else {
-                this._modules[this._moduleName] = this._modules[this._moduleName] || [];
-                this._modules[this._moduleName].push(instance);
+                this._modules[instance._moduleId] = instance;
             }
             onReady(err, instance);
         });
-
-        this._childs[childModuleName] = instance._moduleId;
 
         return instance;
     }
