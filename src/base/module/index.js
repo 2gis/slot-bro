@@ -1,4 +1,7 @@
 import _ from "lodash";
+import { Application } from "../application/index"
+
+var contextRequireTemplate = require.context("../../../app/src/modules/", true, /^.*?\.hbs$/);
 
 export class Module {
     constructor(application, moduleId, moduleName) {
@@ -9,6 +12,7 @@ export class Module {
         this._moduleId = moduleId;
         this._moduleName = moduleName;
         this._modules = {};
+        this._childs = {};
         this.interface = _bindEach(this._parentHandlers(), this);
         this.dispatcher = _bindEach(this._childHandlers(), this);
     }
@@ -25,7 +29,8 @@ export class Module {
         return {};
     }
 
-    dispose() {}
+    dispose() {
+    }
 
     block() {
         return this._app.block(this._moduleId);
@@ -58,6 +63,8 @@ export class Module {
             }
             onReady(err, instance);
         });
+
+        this._childs[childModuleName] = instance._moduleId;
 
         return instance;
     }
@@ -94,6 +101,26 @@ export class Module {
     broadcast(moduleSelector, ...params) {
         return this._app.broadcast(this._moduleId, moduleSelector, ...params);
     }
+
+    render() {
+        var template = Module.requireTemplate(this.type);
+        return template(this.context ? this.context() : this);
+    }
+
+    static requireTemplate(moduleName, fileName = moduleName) {
+        return Module._requireTemplate(`./${moduleName}/${fileName}.hbs`, fileName);
+    }
+
+    static _requireTemplate(path, fileName) {
+        var template = contextRequireTemplate(path);
+
+        if (!template) {
+            throw new TypeError(`Template not found: ${fileName}.hbs`);
+        }
+
+        return template;
+    }
+
 }
 
 function _bindEach(handlersList, target) {

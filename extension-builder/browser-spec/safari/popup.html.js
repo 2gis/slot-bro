@@ -11,7 +11,6 @@ module.exports = function(config) {
                 '<%= styles %>',
             '</head>',
             '<body>',
-                'hello world from popup',
                 '<%= scripts %>',
             '</body>',
         '</html>'

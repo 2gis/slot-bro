@@ -70,16 +70,14 @@ export class Application extends EventEmitter {
         return descriptor;
     }
 
-    static requireModule(moduleName, fileName) {
-        fileName = fileName || moduleName;
-
+    static requireModule(moduleName, fileName = moduleName) {
         var ModuleClass = Application._requireResource('./modules/' + moduleName + '/' + fileName + '.js', moduleName);
         if (!ModuleClass) {
             throw new TypeError('Module not found: ' + moduleName);
         }
 
         return ModuleClass;
-    };
+    }
 
     static _requireResource(path, moduleName = null) {
         var resource = null;

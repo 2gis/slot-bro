@@ -16,12 +16,16 @@ module.exports = function(baseConf) {
                     }
                 },
                 {
+                    test: /\.hbs$/,
+                    loader: 'handlebars-loader'
+                },
+                {
                     test: /\.less$/,
-                    loader: "style!css!less"
+                    loader: 'style!css!less'
                 },
                 {
                     test: /\.(jpg|png|gif|woff)$/,
-                    loader: "file-loader"
+                    loader: 'file-loader'
                 }
             ]
         },
