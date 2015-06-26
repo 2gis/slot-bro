@@ -17,7 +17,13 @@ module.exports = function(baseConf) {
                 },
                 {
                     test: /\.hbs$/,
-                    loader: 'handlebars-loader'
+                    loader: 'handlebars-loader',
+                    query: {
+                        helperDirs: [
+                            baseConf.webpack.base + 'src/helpers/handlebars',
+                            baseConf.webpack.base + 'app/src/helpers/handlebars'
+                        ]
+                    }
                 },
                 {
                     test: /\.less$/,
