@@ -100,15 +100,15 @@ export class Module {
 
     render() {
         var template = Module.requireTemplate(this.type);
-        return template(this.context ? this.context() : this);
+        return template(this.context());
+    }
+
+    context() {
+        return this;
     }
 
     static requireTemplate(moduleName, fileName = moduleName) {
-        return Module._requireTemplate(`./${moduleName}/${fileName}.hbs`, fileName);
-    }
-
-    static _requireTemplate(path, fileName) {
-        var template = contextRequireTemplate(path);
+        var template = contextRequireTemplate(`./${moduleName}/${fileName}.hbs`);
 
         if (!template) {
             throw new TypeError(`Template not found: ${fileName}.hbs`);
@@ -116,7 +116,6 @@ export class Module {
 
         return template;
     }
-
 }
 
 function _bindEach(handlersList, target) {

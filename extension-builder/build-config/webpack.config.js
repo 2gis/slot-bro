@@ -26,10 +26,6 @@ module.exports = function(baseConf) {
                     }
                 },
                 {
-                    test: /\.less$/,
-                    loader: 'style!css!less'
-                },
-                {
                     test: /\.(jpg|png|gif|woff)$/,
                     loader: 'file-loader'
                 }

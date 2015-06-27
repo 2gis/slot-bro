@@ -9,7 +9,7 @@ export class Message extends Module {
     }
 
     context() {
-        var msg = 'Message from message module';
+        var msg = 'Style from message module';
         return {
             some: msg
         };

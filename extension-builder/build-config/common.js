@@ -33,6 +33,10 @@ module.exports = function(baseConf) {
         "kango-ui/kango_api.js"
     ];
 
+    baseConf.styleIncludes = [
+        'static/css/bundle.css'
+    ];
+
     baseConf.mockIncludes = [ // only with dev/test server include. root path
         '/mock/mock.emitter.js',
 
@@ -64,6 +68,13 @@ module.exports = function(baseConf) {
         entryPoints: baseConf.entryPoints,
         base: __dirname + '/../../',
         outputPath: __dirname + '/../../__extbuild/webpack'
+    };
+
+    baseConf.less = {
+        sources: [
+            __dirname + '/../../app/src/assets/**/*.less',
+            __dirname + '/../../app/src/modules/**/*.less'
+        ]
     };
 
     return baseConf;

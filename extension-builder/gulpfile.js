@@ -58,9 +58,9 @@ gulp.task('extension.build', function(callback) {
     plugins.runSequence.apply(plugins, _.compact([
         'cleanup.outputDir',
         ['kango.extract', 'libs.build'],
-        ['webpack.compile', 'kango.copy'],
+        ['webpack.compile', 'style.compile', 'kango.copy'],
         'build.all',
-        (watchFlag ? 'webpack.watch' : null),
+        (watchFlag ? ['webpack.watch', 'style.watch'] : null),
         'libs.pack',
         (packFlag ? ['makePackage.all', 'makeUpdateFile.all'] : null),
         (packFlag ? 'cleanup.buildDir' : null),

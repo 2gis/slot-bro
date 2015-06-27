@@ -9,7 +9,9 @@ export class Another extends Module {
     }
 
     context() {
-        var msg = 'Message from another module';
-        return {msg};
+        var msg = 'Style from another module';
+        return {
+            msg
+        };
     }
 }

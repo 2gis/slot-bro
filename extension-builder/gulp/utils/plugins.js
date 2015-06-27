@@ -10,7 +10,8 @@ var plugins = {
     childProcess: require('child_process'),
     mocha: require('gulp-mocha'),
     webpack: require("webpack"),
-    util: require("gulp-util")
+    util: require("gulp-util"),
+    less: require('gulp-less')
 };
 
 plugins.exec = require('./exec')(plugins);

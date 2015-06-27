@@ -20,6 +20,10 @@ module.exports = function(config) {
         scripts.push('<script src="' + path + '" type="text/javascript"></script>');
     });
 
+    _.each(config.styleIncludes, function(path) {
+        styles.push('<link type="text/css" rel="stylesheet" href="' + path + '">');
+    });
+
     return tpl({
         scripts: scripts.join('\n'),
         styles: styles.join('\n')
