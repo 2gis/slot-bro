@@ -100,11 +100,11 @@ export class Module {
 
     render() {
         var template = Module.requireTemplate(this.type);
-        return template(this.context());
+        return template(this.context(), {data: {module: this}});
     }
 
     context() {
-        return this;
+        return {};
     }
 
     static requireTemplate(moduleName, fileName = moduleName) {

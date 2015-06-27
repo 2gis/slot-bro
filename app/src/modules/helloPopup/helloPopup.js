@@ -20,4 +20,10 @@ export class HelloPopup extends Module {
             'ping': msg => console.log('Reply from background:', msg)
         };
     }
+
+    context() {
+        return {
+            helloPopupMessage: "good from popup"
+        };
+    }
 }
