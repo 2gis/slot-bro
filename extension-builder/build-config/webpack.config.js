@@ -48,7 +48,6 @@ module.exports = function(baseConf) {
             alias: {
                 base: __dirname + '/../../src/base',
                 app: __dirname + '/../../src/base/application'
-                //handlebars: ''
             }
         },
 

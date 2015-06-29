@@ -7,18 +7,23 @@ import Handlebars from 'handlebars/runtime'
  * block mode: {{#module 'moduleName'}} <div>{{{this}}}</div> {{/module}}
  * one line mode: {{module 'moduleName}}
  *
- * @param moduleName - inner module name for inline
+ * @param {string|Module} name - inner module name or instance for inline
  * @param {undefined|function} fn - if function mean block mode
  * @param {Module} module - which template execute helper
  * @returns {string} html
  */
-export default function moduleHelper(moduleName, { fn, data: { module } }) {
+export default function moduleHelper(name, { fn, data: { module } }) {
     // var context = this; // result of module.context() bind in this
+    let moduleInstance;
 
-    let moduleInstance = _.find(module._modules, instance => _.eq(instance.type, moduleName));
+    if (_.isString(name)) {
+        moduleInstance = _.find(module._modules, instance => _.eq(instance.type, name));
+    } else {
+        moduleInstance = name;
+    }
 
     if (!moduleInstance) {
-        throw new TypeError(`Module ${moduleName} are not child`);
+        throw new TypeError(`Module ${name} not found`);
     }
 
     let html = new Handlebars.SafeString(moduleInstance.render());

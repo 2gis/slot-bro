@@ -1,10 +1,11 @@
-import _ from "lodash"
-import { Module } from "base/module"
+import _ from "lodash";
+import { Module } from "base/module";
 
 export class HelloPopup extends Module {
     init(initData, onReady) {
         this.makeChild('message');
         this.makeChild('another');
+        this.makeChild('list');
 
         console.log('Hello world from popup');
 

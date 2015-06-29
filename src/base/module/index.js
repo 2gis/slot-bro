@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { Application } from "../application/index"
 
 var contextRequireTemplate = require.context("../../../app/src/modules/", true, /^.*?\.hbs$/);
 

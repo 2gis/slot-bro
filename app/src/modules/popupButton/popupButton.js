@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import { Module } from 'base/module'
+import _ from 'lodash';
+import { Module } from 'base/module';
 
 export class PopupButton extends Module {
     init(initData, onReady) {
