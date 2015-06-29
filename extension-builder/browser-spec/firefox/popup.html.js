@@ -11,7 +11,6 @@ module.exports = function(config) {
                 '<%= styles %>',
             '</head>',
             '<body>',
-                'hello world from popup',
                 '<%= scripts %>',
             '</body>',
         '</html>'
@@ -19,6 +18,10 @@ module.exports = function(config) {
 
     _.each(config.kangoApi4Popup, function(path) {
         scripts.push('<script src="' + path + '" type="text/javascript"></script>');
+    });
+
+    _.each(config.styleIncludes, function(path) {
+        styles.push('<link type="text/css" rel="stylesheet" href="' + path + '">');
     });
 
     return tpl({

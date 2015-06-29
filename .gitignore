@@ -16,3 +16,4 @@ app/certs/*
 /extension-builder/kango/templates/
 /extension-builder/kango/tools/
 /extension-builder/kango/buildtmp/
+app/src/static/css

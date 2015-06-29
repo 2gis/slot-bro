@@ -10,6 +10,8 @@ export class HelloWorld extends Module {
         /*eslint-enable no-undef, no-console */
 
         _.each(childs, child => this.makeChild(child));
+
+        super.init(initData, onReady);
     }
 
     _waitForContentMessage(e, msg) {

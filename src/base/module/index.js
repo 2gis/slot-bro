@@ -1,5 +1,7 @@
 import _ from "lodash";
 
+var contextRequireTemplate = require.context("../../../app/src/modules/", true, /^.*?\.hbs$/);
+
 export class Module {
     constructor(application, moduleId, moduleName) {
         /**
@@ -25,7 +27,8 @@ export class Module {
         return {};
     }
 
-    dispose() {}
+    dispose() {
+    }
 
     block() {
         return this._app.block(this._moduleId);
@@ -53,8 +56,7 @@ export class Module {
             if (err) {
                 instance.dispose();
             } else {
-                this._modules[this._moduleName] = this._modules[this._moduleName] || [];
-                this._modules[this._moduleName].push(instance);
+                this._modules[instance._moduleId] = instance;
             }
             onReady(err, instance);
         });
@@ -93,6 +95,25 @@ export class Module {
      */
     broadcast(moduleSelector, ...params) {
         return this._app.broadcast(this._moduleId, moduleSelector, ...params);
+    }
+
+    render() {
+        var template = Module.requireTemplate(this.type);
+        return template(this.context(), {data: {module: this}});
+    }
+
+    context() {
+        return {};
+    }
+
+    static requireTemplate(moduleName, fileName = moduleName) {
+        var template = contextRequireTemplate(`./${moduleName}/${fileName}.hbs`);
+
+        if (!template) {
+            throw new TypeError(`Template not found: ${fileName}.hbs`);
+        }
+
+        return template;
     }
 }
 
