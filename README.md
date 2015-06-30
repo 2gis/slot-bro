@@ -34,10 +34,7 @@ kango.tab.dispatchMessage and backwards, so the delevoper may not know about the
 * Other Kango goodies (such as kango.storage, kango.xhr and others) are wrapped into __components__ and also are augmented with some more useful goodies.
 
 ### TODO List
-* Proxy modules implementation
-* Watcher for auto-rebuilding resources on file change
 * Extended i18n support (.po, gettext, etc)
-* Single-page dev/test platform
 * Detailed documentation
 
 ### Project status
