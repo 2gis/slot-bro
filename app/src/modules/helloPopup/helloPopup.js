@@ -24,7 +24,7 @@ export class HelloPopup extends Module {
 
     context() {
         return {
-            helloPopupMessage: "good from popup"
+            helloPopupMessage: `good from ${this.type}`
         };
     }
 }

@@ -9,9 +9,8 @@ export class Message extends Module {
     }
 
     context() {
-        var msg = 'Style from message module';
         return {
-            some: msg
+            some: `Style from ${this.type} module`
         };
     }
 }
