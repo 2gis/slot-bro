@@ -11,6 +11,7 @@ export class Module {
         this._moduleId = moduleId;
         this._moduleName = moduleName;
         this._modules = {};
+        this._storage = new Map(); // Storage for interact between class methods
         this.interface = _bindEach(this._parentHandlers(), this);
         this.dispatcher = _bindEach(this._childHandlers(), this);
     }
@@ -62,6 +63,14 @@ export class Module {
         });
 
         return instance;
+    }
+
+    set(key, value) {
+        this._storage.set(key, value);
+    }
+
+    get(key) {
+        return this._storage.get(key);
     }
 
     // App proxies

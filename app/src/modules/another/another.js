@@ -9,9 +9,8 @@ export class Another extends Module {
     }
 
     context() {
-        var msg = 'Style from another module';
         return {
-            msg
+            msg: `Style from ${this.type} module`
         };
     }
 }

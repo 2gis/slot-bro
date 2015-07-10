@@ -4,16 +4,22 @@ import { Module } from 'base/module';
 export class List extends Module {
     init(initData, onReady) {
 
-        let listElems = [
+        let positions = [
             'first',
             'second',
             'last'
         ];
 
-        _.each(listElems, (initData, i, listElems) => listElems[i] = this.makeChild('listElem', initData));
+        let childs = _.map(positions, (position) => this.makeChild('listElem', position));
 
-        this.context = () => ({childs: listElems});
+        this.set('childs', childs);
 
         super.init(initData, onReady);
+    }
+
+    context() {
+        return {
+            childs: this.get('childs')
+        };
     }
 }

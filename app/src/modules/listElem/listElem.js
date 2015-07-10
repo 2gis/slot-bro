@@ -4,8 +4,14 @@ import { Module } from 'base/module';
 export class ListElem extends Module {
     init(initData, onReady) {
 
-        this.context = () => ({position: initData});
+        this.set('position', initData);
 
         super.init(initData, onReady);
+    }
+
+    context() {
+        return {
+            position: this.get('position')
+        };
     }
 }
